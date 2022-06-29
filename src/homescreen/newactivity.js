@@ -18,18 +18,15 @@ import Icon from "react-native-vector-icons/Ionicons";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Picker} from '@react-native-picker/picker';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import SQLite from 'react-native-sqlite-storage';
+import {openDatabase} from 'react-native-sqlite-storage';
 
 const widthWindow = Dimensions.get('window').width;
 const heightWindow = Dimensions.get('window').height;
 
-const db = SQLite.openDatabase(
+const db = openDatabase(
   {
-    name: 'StudentDB',
-    location:'default',
+    name: 'studentdb',
   },
-  () => { },
-  error => {console.log(error)}
 );
 
 function Newactivity({navigation}) {
@@ -41,37 +38,59 @@ function Newactivity({navigation}) {
   const [selectImageBottom, setSelectImageBottom] = useState(false);
   const [imageCCCDTop, setImageCCCDTop] = useState('')
   const [imageCCCDBottom, setImageCCCDBottom] = useState('')
-  const [imageTest, setImageTest] = useState([])
   // Lấy dữ liệu với  useState
   const [getCCCD, setCCCD] = useState('');
   const [getName, setName] = useState('');
   const [getPhone, setPhone] = useState('');
   const [gender, setGender] = useState('');
+  const [imageCCCDTopData, setImageCCCDTopData] = useState('')
+  const [imageCCCDBottomData, setImageCCCDBottomData] = useState('')
 
-
-   // const createTable = () => {
-  //   db.transaction((tx) => {
-  //     tx.executeSql(
-  //       "Create Table IF Not Exit"
-  //       + "User"
-  //       +"();"
-  //     )
-  //   })
-  // }
-  
-  // const setData = async () => {
+  // const setData = () => {
   //   if (getName.length == 0 || getCCCD == 0 || getPhone == 0 ) {
   //     Alert.alert('Warning!', 'Please write your data.')
   //   }else {
   //     try {
-  //       db.transaction((tx) => {
-  //         tx.
+  //        db.transaction(tx => {
+  //          tx.executeSql(
+  //           'INSERT INTO users (hoTen, gioiTinh, cardID, phoneNumber, dateBirth, cardImgTop, cardImgBT) VALUE (?,?,?,?,?,?,?)',
+  //           [getName, gender, getCCCD, getPhone, dateOutput, imageCCCDTopData, imageCCCDBottomData],
+  //           (sqlTxn, res) => {
+  //             console.log('users add complete');
+  //           },
+  //           error => {
+  //             console.log("error add coding "+ error.message);
+  //           }
+  //         )
   //       })
+      
+  //       navigation.navigate('Mainactivity')
   //     } catch (error) {
-        
+  //       console.log(error);
   //     }
   //   }
   // }
+
+  const addCategory = () => {
+    if (getName.length == 0 || getCCCD == 0 || getPhone == 0 ) {
+      alert("Enter category");
+      return false;
+    }
+
+    db.transaction(txn => {
+      txn.executeSql(
+        `INSERT INTO users (hoten, gioitinh , cardid , phonenumber, datebirth, cardimgtop, cardimgbt) VALUES (?,?,?,?,?,?,?)`,
+        [getName, gender, getCCCD, getPhone, dateOutput, imageCCCDTopData, imageCCCDBottomData],
+        (sqlTxn, res) => {
+          console.log(`${getName} category added successfully`);
+          navigation.navigate('Mainactivity')
+        },
+        error => {
+          console.log("error on adding category " + error.message);
+        },
+      );
+    });
+  };
 
   const showDatePicker = () => {
     if (datePicker == false) {
@@ -160,9 +179,9 @@ function Newactivity({navigation}) {
       }else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton)
       }else{
-        console.log(response.base64)
         const source = {uri: 'data:image/jpeg;base64,' + response.assets[0]['base64']};
         setImageCCCDTop(source);
+        setImageCCCDTopData(response.assets[0]['base64']);
       }
     });
   };
@@ -188,6 +207,8 @@ function Newactivity({navigation}) {
       }else{
         const source = {uri:'data:image/jpeg;base64,'+response.assets[0]['base64']};
         setImageCCCDTop(source);
+        setImageCCCDTopData(response.assets[0]['base64'])
+
       }
     });
   };
@@ -212,6 +233,8 @@ function Newactivity({navigation}) {
       }else{
         const source = {uri: 'data:image/jpeg;base64,'+ response.assets[0]['base64']};
         setImageCCCDBottom(source);
+        setImageCCCDBottomData(response.assets[0]['base64'])
+
       }
     });
   };
@@ -236,6 +259,7 @@ function Newactivity({navigation}) {
       }else{
         const source = {uri:'data:image/jpeg;base64,'+ response.assets[0]['base64']};
         setImageCCCDBottom(source);
+        setImageCCCDBottomData(response.assets[0]['base64'])
        
       }
     });
@@ -404,6 +428,18 @@ function Newactivity({navigation}) {
                 source={imageCCCDBottom}
                 style = {{width:"90%", height:250, borderColor:'black', marginBottom:80, marginStart: 20, borderWidth:1}}
               />
+              <View style={{width:'100%', height: 100, marginBottom: 60, flexDirection:'row', justifyContent:'center'}}>
+                <TouchableOpacity
+                  onPress={
+                    addCategory
+                  }
+                 style={{width:'35%', height:'60%', backgroundColor:'#FF8306', alignItems:'center', padding:20, borderRadius:10}}>
+                  <Text style={{color:'white', fontSize:15, fontWeight:'bold'}}>
+                    Xác Nhận
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            
           </ScrollView>
         </View>
       </SafeAreaView>

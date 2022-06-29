@@ -9,25 +9,23 @@ import {
   Text,
   Animated,
   TextInput,
-  StatusBar
+  StatusBar,
+  RefreshControl
 } 
   from 'react-native';
 import React, { Component } from 'react'
 import { useState, useEffect, useRef } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import SQLite from 'react-native-sqlite-storage';
+import {openDatabase} from 'react-native-sqlite-storage';
 
 
 const widthWindow = Dimensions.get('window').width;
 const heightWindow = Dimensions.get('window').height;
 
-const db = SQLite.openDatabase(
+const db = openDatabase(
   {
-    name: 'StudentDB',
-    location:'default',
-  },
-  () => { },
-  error => {console.log(error)}
+    name: 'studentdb',
+  }
 );
 
 const listOption = [
@@ -67,9 +65,58 @@ const listSchool = [
     },
     {
       grade: "Du Học",
+      detail: "Đức",
+      image: require("../../drawble/drawblev24/Component850.png")
+    },
+    {
+      grade: "Du Học",
+      detail: "Philippines",
+      image: require("../../drawble/drawblev24/Component852.png")
+    },
+    {
+      grade: "Du Học",
       detail: "Nhật Bản",
       image: require("../../drawble/drawblev24/Component851.png")
     }
+]
+
+const listmajors = [
+  {
+      
+      detail: "Công nghệ kĩ thuật cơ khí",
+      image: require("../../drawble/drawblev24/Group-148.png")
+    },
+    {
+      
+      detail: "Công nghệ KT Điện - Điện tử",
+      image: require("../../drawble/drawblev24/Group-148.png")
+    },
+    {
+      
+      detail: "Công nghệ Chế tạo máy",
+      image: require("../../drawble/drawblev24/Group-148.png")
+    },
+    {
+      
+      detail: "Công nghệ KT Điện tử - Viễn thông",
+      image: require("../../drawble/drawblev24/Group-148.png")
+    },
+    {
+      
+      detail: "Kỹ thuật công nghiệp",
+      image: require("../../drawble/drawblev24/Group-148.png")
+    },
+    {
+      
+      detail: "Công nghệ kỹ thuật Ô tô",
+      image: require("../../drawble/drawblev24/Group-148.png")
+    },
+    {
+      
+      detail: "Công nghệ thông tin",
+      image: require("../../drawble/drawblev24/Group-148.png")
+    },
+    
 ]
 
 
@@ -89,22 +136,58 @@ function Mainactivity ({navigation}) {
   const [listItemPerSon, setListItemPerson] = useState([]);
   const [indexGet, setIndexGet] = useState(true)
   const [school, setSchool] = useState(false);
+  const [majors, setMajors] = useState(false);
+
   const [inforSchool, setInforSchool] = useState([]);
   const [indexInfor, setindexInfor] = useState(0);
-
-  useEffect(() => {
-    createTable();
-  }, [])
+  const [indexInforMajors, setindexInforMajors] = useState(0);
+  const [refreshControl, setRefreshControl] = useState(false)
 
    const createTable = () => {
     db.transaction((tx) => {
       tx.executeSql(
-        "Create Table IF Not Exit"
-        + "Users"
-        +"(ID INTEGER PRIMARY KEY AUTOINCREMENT,hoTen TEXT, gioiTinh INTEGER, cardID INTEGER, phoneNumber TEXT, dateBirth TEXT, cardImgTop TEXT, cardImgBT TEXT);"
+        'CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT,hoten TEXT, gioitinh INTEGER, cardid INTEGER, phonenumber TEXT, datebirth TEXT, cardimgtop TEXT, cardimgbt TEXT)',
+        [],
+        (tx, res) => {
+          console.log("table create complete");
+        },
+        error => {
+          console.log("table create error"+ error.message);
+        },
       )
     })
   }
+
+  const getData = () => {
+    db.transaction(txn => {
+      txn.executeSql(
+        `SELECT * FROM users ORDER BY id DESC`,
+        [],
+        (sqlTxn, res) => {
+          console.log("categories retrieved successfully");
+          let len = res.rows.length;
+
+          if (len > 0) {
+            let results = [];
+            for (let i = 0; i < len; i++) {
+              let item = res.rows.item(i);
+              results.push({ id: item.id, name: item.hoten });
+            }
+
+            console.log(results);
+          }
+        },
+        error => {
+          console.log("error on getting categories " + error.message);
+        },
+      );
+    });
+  };
+
+  useEffect(() => {
+    createTable();
+    getData();
+  }, []);
   
 
   for (let index = 0; index <= listDefault.length; index++) {
@@ -169,12 +252,62 @@ function Mainactivity ({navigation}) {
     }
   }
 
+  //Nganh hoc
+
+  function getInforMajors() {
+    if (majors == true) {
+      return (
+      <View style={majors == true?{width: '100%', height:70, margin: 5, marginTop:20}:{width:0, height: 0}}>
+                           
+        <View style = {{flexDirection:'row',justifyContent:'space-between', marginEnd: 20}}>
+          
+          <View style={{flexDirection:'row'}}>
+            <Image
+              resizeMode='stretch'
+              style={{width: 70, height:70}}
+              source={listmajors[indexInforMajors].image}
+            />
+            <View style={{marginTop:10}}>
+              
+              <Text style={{}}>
+                {listmajors[indexInforMajors].detail}
+              </Text>
+            </View>
+            
+          </View>
+          <TouchableOpacity
+            style={{marginTop:15}}
+            onPress={() => {
+              setMajors(false)
+              setindexInforMajors(0)
+              }
+            }
+          >
+            <Icon name="refresh" size={24} color="#FF8306"/>
+          </TouchableOpacity>
+        </View>
+       </View>)
+    }
+  }
+
     return (
       <SafeAreaView>
         <StatusBar
           hidden={false}
         />
-        <View style={{width: widthWindow, height: heightWindow, backgroundColor:'white'}}>
+        <ScrollView
+        refreshControl = {
+          <RefreshControl refreshing={refreshControl} onRefresh={() => {
+            setRefreshControl(true)
+            getData();
+            console.log("lam moi")
+            setTimeout(() => {
+              setRefreshControl(false)
+            }, 3000)
+            // setRefreshControl(false)
+          }} colors={['#FF8306']} />
+        }
+        style={{width: widthWindow, height: heightWindow, backgroundColor:'white'}}>
           {/* name and logo */}
           <View style={{flexDirection:'row', width:'100%', height:50, alignItems:'center', justifyContent:'space-between', marginTop: 30, paddingStart:30, paddingEnd: 30, marginBottom: 20}}>
                 <View style={{flexDirection:'row'}}>
@@ -405,13 +538,14 @@ function Mainactivity ({navigation}) {
                      </View>
                      <View style={{width:'100%', height:'90%', backgroundColor:'#F5F5F5', borderRadius:10, borderTopLeftRadius:0}}>
                         <ScrollView
+                          nestedScrollEnabled = {true}
                           showsHorizontalScrollIndicator={false}
                           style={{width: "100%", height: '100%'}}
                         >
                           <Text style={{fontWeight:'bold', marginStart: 10, color:'black'}}>
                               Đăng kí bậc học
                             </Text>
-                          <View style={{width:'100%', height: '100%', flexDirection:'row', flexWrap:'wrap'}}>
+                          <View style={{width:'100%', height: 'auto', flexDirection:'row', flexWrap:'wrap'}}>
                             
                           {
                             listSchool.map((e3, index3) =>
@@ -432,15 +566,43 @@ function Mainactivity ({navigation}) {
                           {
                             getInforSchool()
                           }
-                          
-                              
-                            
                           </View>
+
+                          <Text style={{fontWeight:'bold', marginStart: 10, color:'black'}}>
+                              Ngành Học
+                            </Text>
+                          <View style={{width:'100%', height: 'auto', flexDirection:'row', flexWrap:'wrap'}}>
+                            
+                          {
+                            listmajors.map((e4, index4) =>
+                            <TouchableOpacity style={majors == false?{width: 70, height:70, margin: 5, marginTop:20}:{width:0, height:0}}
+                            onPress={() =>{
+                            setMajors(true);
+                            setindexInforMajors(index4);
+
+                            }}>
+                              <Image
+                                resizeMode='stretch'
+                                style={{width: '100%', height:'100%'}}
+                                source={listmajors[index4].image}
+                                />
+                          </TouchableOpacity>
+                          )
+                          }
+                          {
+                            getInforMajors()
+                          }
+                          </View>
+                          <TouchableOpacity style={{width:'90%', height: 50, backgroundColor:'#FF8306', borderRadius:10, margin:'5%'}}>
+                            <Text style={{textAlign:'center', color:'white', fontSize:18, fontWeight:'bold', padding:10}}>
+                              Lưu
+                            </Text>
+                          </TouchableOpacity>
                         </ScrollView>
                      </View>
                 </View>
             </View>
-        </View>
+        </ScrollView>
       </SafeAreaView>
     )
 }

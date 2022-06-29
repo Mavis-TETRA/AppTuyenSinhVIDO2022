@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Splashscreen from './splashscreen/splashscreen';
+import SplashscreenLogin from './splashscreen/splashscreenlogin';
 import InTroduce from './introduce/introduce';
 import Login from './loginscreen/login';
 import Accuracy from './loginscreen/accuracy';
@@ -103,6 +104,7 @@ function RootComponent() {
       {/* Rest of your app code */}
         <Stack.Navigator initialRouteName="Splashscreen" screenOptions={{headerShown: false}}>
           <Stack.Screen name="Splashscreen" component={Splashscreen} />
+          <Stack.Screen name="SplashscreenLogin" component={SplashscreenLogin} />
           <Stack.Screen name="InTroduce" component={InTroduce} />
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Accuracy" component={Accuracy} />
@@ -110,6 +112,7 @@ function RootComponent() {
           <Stack.Screen name="NewPass" component={NewPass} />
           <Stack.Screen name="Register" component={Register} />
           <Stack.Screen name="ControlTab" component={ControlTab} />
+          <Stack.Screen name="Mainactivity" component={Mainactivity} />
           <Stack.Screen name="Newactivity" component={Newactivity} />
           <Stack.Screen name="Scanneractivity" component={Scanneractivity} />
           <Stack.Screen name="Notificationactivity" component={Notificationactivity} />

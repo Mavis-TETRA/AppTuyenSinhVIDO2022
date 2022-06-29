@@ -121,7 +121,7 @@ function Login({navigation}) {
                   <View style={{width:'100%', height:'auto', alignItems:'center'}}>
                     <TouchableOpacity style={{ alignItems: 'center', justifyContent:'center', width:'95%',height:60, backgroundColor:'#F38320', borderRadius:10}}
                     onPress = {() => {
-                      navigation.navigate('ControlTab');
+                      navigation.navigate('SplashscreenLogin');
                       // navigation.navigate('ComFirmID', {
                       //   email: getEmail
                       // });
