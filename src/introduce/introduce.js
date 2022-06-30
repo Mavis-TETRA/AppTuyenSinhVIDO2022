@@ -73,7 +73,7 @@ function InTroduce({navigation}) {
                     topMotion, 
                     {
                         toValue:0,
-                        duration: 2000,
+                        duration: 3000,
                         useNativeDriver:false,
                     }),
     
@@ -81,7 +81,7 @@ function InTroduce({navigation}) {
                         leftMotion, 
                         {
                             toValue:50,
-                            duration: 1000,
+                            duration: 2000,
                             useNativeDriver:false,
                             
                         }
@@ -90,7 +90,7 @@ function InTroduce({navigation}) {
                         rightMotion, 
                         {
                             toValue:50,
-                            duration: 1000,
+                            duration: 2000,
                             useNativeDriver:false,
                         }
                     )
