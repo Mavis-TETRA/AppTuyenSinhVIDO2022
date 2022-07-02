@@ -18,6 +18,13 @@ import Newactivity from './homescreen/newactivity';
 import Inforactivity from './homescreen/inforactivity';
 import Scanneractivity from './homescreen/scanneractivity';
 import Notificationactivity from './homescreen/notification';
+import Recordkeeping from './homescreen/recordkeeping';
+// my-account
+import MyAccount from './account/myaccount';
+import ChangeInfor from './account/changeinfor';
+import ChangeImage from './account/changeimg';
+import SetNotification from './account/setnotification';
+
 
 
 const Stack = createNativeStackNavigator();
@@ -116,6 +123,13 @@ function RootComponent() {
           <Stack.Screen name="Newactivity" component={Newactivity} />
           <Stack.Screen name="Scanneractivity" component={Scanneractivity} />
           <Stack.Screen name="Notificationactivity" component={Notificationactivity} />
+          <Stack.Screen name="Recordkeeping" component={Recordkeeping} />
+          <Stack.Screen name="MyAccount" component={MyAccount} />
+          <Stack.Screen name="ChangeInfor" component={ChangeInfor} />
+          <Stack.Screen name="ChangeImage" component={ChangeImage} />
+          <Stack.Screen name="SetNotification" component={SetNotification} />
+
+
 
 
 

@@ -29,7 +29,7 @@ function Inforactivity({navigation}) {
         <StatusBar
           hidden = {false}
         />
-        <View style={{width: widthWindow, height: heightWindow, backgroundColor:'white'}}>
+        <ScrollView style={{width: widthWindow, height: heightWindow, backgroundColor:'white'}}>
           <View style={{flexDirection:'row', width:'100%', height:50, alignItems:'center', justifyContent:'space-between', marginTop: 30, paddingStart:30, paddingEnd: 30, marginBottom: 20}}>
            <View style={{flexDirection:'row'}}>
               <Image style={{width:50, height:50, borderRadius: 30}} source={require('../../drawble/Image/bg4.jpg')}/>
@@ -51,9 +51,7 @@ function Inforactivity({navigation}) {
 
                 elevation: 5, borderRadius:10, flexDirection: 'row', alignItems:'center', justifyContent:'center'}}
                 onPress={() => {
-                  <View style={{backgroundColor:'red', width:widthWindow, height:heightWindow, position:'absolute', zIndex:100}}>
-            <Text>Hello</Text>
-                  </View>
+                  navigation.navigate('Notificationactivity')
                 }}
               >
               {/* <Image style={{width: 50, height:50}} source={require('../../drawble/drawblev24/Group-123.png')}/> */}
@@ -128,36 +126,33 @@ function Inforactivity({navigation}) {
                 <Text style={{fontSize:18, fontWeight:'bold', color:'black', marginBottom: 20}}>
                   CÀI ĐẶT
                 </Text>
-                <ScrollView
-                 showsHorizontalScrollIndicator={false}
-                 pagingEnabled
-                 
-                style={{width:'100%',height:'100%'}}>
+                <View
+                style={{width:'100%',height:'auto', marginBottom:80}}>
+                  
                   <View style = {{width:'90%', height:'auto',backgroundColor:'#F8F8F8',margin:20, padding:10, borderRadius:10}}>
+                    <Text style ={{fontWeight:'bold', color:'black', fontSize:15, textAlign:'center'}}>
+                          Tài Khoản
+                        </Text>
                     <TouchableOpacity
                       onPress={
                         () => {
-                          navigation.navigate('Login');
+                          navigation.navigate('MyAccount');
                         }
                       }
                       style={{width:'100%', height:100,flexDirection:'row', backgroundColor:'white', justifyContent:'center', marginBottom:20, padding:10}}>
-                        <Icon name="published-with-changes" size={24} color="black" style={{marginEnd:10, }}/>
-                        <Text style ={{fontWeight:'bold', color:'black', fontSize:15}}>
-                          Thay đổi tài khoản
-                        </Text>
                       </TouchableOpacity>
-
+                      <Text style ={{fontWeight:'bold', color:'black', fontSize:15, textAlign:'center'}}>
+                          Hồ Sơ
+                        </Text>
                       <TouchableOpacity
                       onPress={
                         () => {
-                          navigation.navigate('Login');
+                          navigation.navigate('Recordkeeping');
                         }
                       }
                       style={{width:'100%', height:100,flexDirection:'row', backgroundColor:'white', justifyContent:'center', marginBottom:20, padding:10}}>
-                        <Icon name="exit-to-app" size={24} color="black" style={{marginEnd:10, }}/>
-                        <Text style ={{fontWeight:'bold', color:'black', fontSize:15}}>
-                          Đăng xuất
-                        </Text>
+                        
+                        
                       </TouchableOpacity>
                   </View>
                   <View style = {{ width:'90%', height:'auto',backgroundColor:'#F8F8F8',margin:20, padding:10, borderRadius:10}}>
@@ -189,9 +184,9 @@ function Inforactivity({navigation}) {
                       </TouchableOpacity>
                     
                   </View>
-                </ScrollView>
+                </View>
             </View>
-        </View>
+        </ScrollView>
       </SafeAreaView>
     )
 }
