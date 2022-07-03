@@ -414,7 +414,11 @@ function Mainactivity ({navigation}) {
                                     </Text>
                                   </View>
                                 </TouchableOpacity>
-                                <TouchableOpacity>
+                                <TouchableOpacity
+                                onPress={()=>{
+                                  navigation.navigate('DetailAccount')
+                                }}
+                                >
                                   <Icon name="visibility" size={24} color="#FF8306"/>
                                 </TouchableOpacity>
                               </View> 

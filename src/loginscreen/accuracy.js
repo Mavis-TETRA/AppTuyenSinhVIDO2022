@@ -64,8 +64,8 @@ import {
     return(
       <SafeAreaView style={{width:'100%', height:'100%', backgroundColor:'#FFFFFF'}}>
         <StatusBar hidden={true} /> 
-        <View style={{width:'100%', height: '100%', flexDirection:'column'}}>
-
+        <View style={{width:'100%', height: '100%', flexDirection:'column', position:'relative'}}>
+        <Image style={{position:'absolute', bottom:-500, left:-300}} source={require('../../drawble/drawblev24/Group33.png')}/>
           <View style={{margin: 20, marginTop:30}}>
             <TouchableOpacity style={{ width:'auto', height:'auto'}}
               onPress={()=> {

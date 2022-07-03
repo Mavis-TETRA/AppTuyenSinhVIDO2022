@@ -54,7 +54,9 @@ function Login({navigation}) {
   return(
     <SafeAreaView style={{width:'100%', height:'100%', backgroundColor:'#FFFFFF'}}>
            <StatusBar hidden={true} /> 
-                <View style={{width:'100%', height: '100%', flexDirection:'column'}}>
+              <View style={{width:'100%', height: '100%', flexDirection:'column', position:'relative'}}>
+                <Image style={{position:'absolute', bottom:-500, left:-300}} source={require('../../drawble/drawblev24/Group33.png')}/>
+                
                 <View style={{marginTop:0.2*widthWindow, width:'100%', height:'auto', alignItems: 'center'}}>
                   <Image source={require('../../drawble/Image/logo_color.jpg')} style={{width:100, height:100}} />
                   <Text style={{fontSize:25, fontStyle:'normal', color: '#F38320', fontWeight:'bold', marginTop: 20}}>CAO ĐẲNG VIỄN ĐÔNG</Text>

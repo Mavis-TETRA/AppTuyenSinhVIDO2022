@@ -181,7 +181,8 @@ function InTroduce({navigation}) {
                     </View>
                     
                 </View>
-                <View style={{width:'100%', height:'20%', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
+                <View style={{width:'100%', height:'20%', flexDirection:'column', justifyContent:'center', alignItems:'center', position:'relative'}}>
+                    <Image style={{position:'absolute', top:-300, left:-300}} source={require('../../drawble/drawblev24/Group33.png')}/>
                     <TouchableOpacity style={{width: widthWindow* 0.9, height: heightWindow*0.07,borderRadius: 10, backgroundColor:'#FF8306'}}
                         onPress = {
                             () => {
