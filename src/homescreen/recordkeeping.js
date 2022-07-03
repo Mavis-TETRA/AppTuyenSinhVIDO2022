@@ -74,7 +74,11 @@ import { Text,
                   <TouchableOpacity>
                     <Icon name="eraser" size={20} color="#000000"/>
                   </TouchableOpacity>
-                  <TouchableOpacity>
+                  <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate('DetailAccount')
+                  }}
+                  >
                     <Icon name="eye" size={20} color="#000000"/>
                   </TouchableOpacity>
                   <TouchableOpacity>
@@ -83,7 +87,11 @@ import { Text,
                 </View>
               </View>
 
-              <TouchableOpacity style={{flexDirection:'row', width:'90%', height:'auto', backgroundColor:'white', margin: 20, marginTop:10, marginBottom:10, borderRadius: 20, padding:15, alignItems:'center',
+              <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("Newactivity")
+              }}
+              style={{flexDirection:'row', width:'90%', height:'auto', backgroundColor:'white', margin: 20, marginTop:10, marginBottom:10, borderRadius: 20, padding:15, alignItems:'center',
               shadowColor: "#000",
               shadowOffset: {
                 width: 0,

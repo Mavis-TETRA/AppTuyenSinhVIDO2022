@@ -307,16 +307,21 @@ function Mainactivity ({navigation}) {
             // setRefreshControl(false)
           }} colors={['#FF8306']} />
         }
-        style={{width: widthWindow, height: heightWindow, backgroundColor:'white'}}>
+        style={{width: widthWindow, height: heightWindow, backgroundColor:'white', position:'relative'}}>
+           <Image style={{position:'absolute', top:-500, left:-400}} source={require('../../drawble/drawblev24/Group32.png')}/>
           {/* name and logo */}
           <View style={{flexDirection:'row', width:'100%', height:50, alignItems:'center', justifyContent:'space-between', marginTop: 30, paddingStart:30, paddingEnd: 30, marginBottom: 20}}>
-                <View style={{flexDirection:'row'}}>
+                <TouchableOpacity 
+                onPress={()=>{
+                  navigation.navigate('Inforactivity')
+                }}
+                style={{flexDirection:'row'}}>
                   <Image style={{width:50, height:50, borderRadius: 30}} source={require('../../drawble/Image/bg4.jpg')}/>
                   <View style={{marginLeft: 10}}>
                     <Text style={{fontSize: 13}}>Chào bạn !</Text>
                     <Text style={{fontSize: 20, fontWeight:'bold', color: 'black'}}>Trần Minh Tân</Text>
                   </View>
-                </View>
+                </TouchableOpacity>
                 <View>
                   <TouchableOpacity
                     style = {{width:40, height:40, backgroundColor:'white', shadowColor: "#000",
@@ -353,7 +358,9 @@ function Mainactivity ({navigation}) {
                       
                       <View style={{width: widthWindow, height: '100%', alignItems:'center'}}>
                           
-                          <View style={{width:'90%', height:'100%', borderRadius: 20, borderColor:'black', borderWidth:0.5, paddingTop:10, paddingStart: 20, paddingEnd:20, paddingBottom:10}}>
+                          <View style={{width:'90%', height:'100%', borderRadius: 20,backgroundColor:'white', borderColor:'black', borderWidth:0.5, paddingTop:10, paddingStart: 20, paddingEnd:20, paddingBottom:10
+                        
+                        }}>
                               <View style={{flexDirection: 'row', justifyContent:'space-between' , marginBottom:5}}>
                                 <Text style={{fontSize:15, color:'black'}}>
                                   Họ Và Tên 

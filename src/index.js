@@ -24,6 +24,7 @@ import MyAccount from './account/myaccount';
 import ChangeInfor from './account/changeinfor';
 import ChangeImage from './account/changeimg';
 import SetNotification from './account/setnotification';
+import DetailAccount from './account/detailaccount';
 
 
 
@@ -124,15 +125,12 @@ function RootComponent() {
           <Stack.Screen name="Scanneractivity" component={Scanneractivity} />
           <Stack.Screen name="Notificationactivity" component={Notificationactivity} />
           <Stack.Screen name="Recordkeeping" component={Recordkeeping} />
+          <Stack.Screen name="Inforactivity" component={Inforactivity} />
           <Stack.Screen name="MyAccount" component={MyAccount} />
           <Stack.Screen name="ChangeInfor" component={ChangeInfor} />
           <Stack.Screen name="ChangeImage" component={ChangeImage} />
           <Stack.Screen name="SetNotification" component={SetNotification} />
-
-
-
-
-
+          <Stack.Screen name="DetailAccount" component={DetailAccount} />
         </Stack.Navigator>
       </NavigationContainer>
     )

@@ -271,8 +271,9 @@ function Newactivity({navigation}) {
         <StatusBar
           hidden={false}
         />
-        <View style={{width: widthWindow, height: '100%'}}>
-          <View style={{backgroundColor:'white', width: widthWindow, height: '10%', position:'relative', flexDirection:'row'}}>
+        <View style={{width: widthWindow, height: '100%', position:'relative', backgroundColor:'white'}}>
+        <Image style={{position:'absolute', top:-500, left:-400}} source={require('../../drawble/drawblev24/Group32.png')}/>
+          <View style={{ width: widthWindow, height: '10%', position:'relative', flexDirection:'row'}}>
             <TouchableOpacity style={{paddingTop: 30, paddingStart:20, width:'auto', paddingEnd:10}}
               onPress={() => {
                 navigation.goBack();
@@ -288,7 +289,7 @@ function Newactivity({navigation}) {
           </View>
           
           
-          <ScrollView style={{backgroundColor:'white', width: widthWindow, height: '90%', position:'relative'}}>
+          <ScrollView style={{ width: widthWindow, height: '90%', position:'relative'}}>
             <View style={{width: '90%', height: 40, marginBottom: 40, marginStart: 10}}>
                     <Text style={{marginStart: 10}}>
                       Số/No

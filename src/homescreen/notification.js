@@ -55,7 +55,8 @@ import { Text,
           <StatusBar
             hidden={false}
           />
-          <View style={{width: widthWindow, height: '100%'}}>
+          <View style={{width: widthWindow, height: '100%', position:'relative'}}>
+          <Image style={{position:'absolute', top:-500, left:-400}} source={require('../../drawble/drawblev24/Group32.png')}/>
             <View style={{backgroundColor:'#FB8824', width: widthWindow, height: '10%', position:'relative', flexDirection:'row'}}>
               <TouchableOpacity style={{paddingTop: 25, paddingStart:20, width:'auto', paddingEnd:10}}
                 onPress={() => {

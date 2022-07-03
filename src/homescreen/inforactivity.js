@@ -29,7 +29,8 @@ function Inforactivity({navigation}) {
         <StatusBar
           hidden = {false}
         />
-        <ScrollView style={{width: widthWindow, height: heightWindow, backgroundColor:'white'}}>
+        <ScrollView style={{width: widthWindow, height: heightWindow, backgroundColor:'white', position:'relative'}}>
+        <Image style={{position:'absolute', top:-500, left:-400}} source={require('../../drawble/drawblev24/Group32.png')}/>
           <View style={{flexDirection:'row', width:'100%', height:50, alignItems:'center', justifyContent:'space-between', marginTop: 30, paddingStart:30, paddingEnd: 30, marginBottom: 20}}>
            <View style={{flexDirection:'row'}}>
               <Image style={{width:50, height:50, borderRadius: 30}} source={require('../../drawble/Image/bg4.jpg')}/>
