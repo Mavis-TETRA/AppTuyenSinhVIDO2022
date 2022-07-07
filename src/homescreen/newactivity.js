@@ -364,8 +364,8 @@ function Newactivity({navigation}) {
                   }
                   style ={{width: 150, height: 50, color:'#333333'}}
                 >
-                  <Picker.Item label = 'Nam' value = '0' />
-                  <Picker.Item label = 'Nữ' value = '1'/>
+                  <Picker.Item label = 'Nam' value = 'Nam' />
+                  <Picker.Item label = 'Nữ' value = 'Nữ'/>
                 </Picker>
                 {/* {
                   console.log(gender)

@@ -124,13 +124,7 @@ const listmajors = [
 
 function Mainactivity ({navigation}) {
 
-  const listDefault = [
-    "074202000079||Trần Minh Tân1|07092002|Nam|361/12 Đường An Nhơn Tây, Tổ 1, Ấp Ba Sòng, An Nhơn Tây, Củ Chi, TP.Hồ Chí Minh|11022022",
-    "074202000079||Trần Minh Tân2|07092002|Nam|361/12 Đường An Nhơn Tây, Tổ 1, Ấp Ba Sòng, An Nhơn Tây, Củ Chi, TP.Hồ Chí Minh|11022022",
-    "074202000079||Trần Minh Tân9|07092002|Nam|361/12 Đường An Nhơn Tây, Tổ 1, Ấp Ba Sòng, An Nhơn Tây, Củ Chi, TP.Hồ Chí Minh|11022022"
-  ];
-
-  const [listPerSon, setListPerson] = useState(listDefault);
+  const [listPerSon, setListPerson] = useState([]);
   const [cardActive, setCardActive] = useState(0);
   const [option, setOption] = useState(0);
   const [listItemPerSon, setListItemPerson] = useState([]);
@@ -146,7 +140,7 @@ function Mainactivity ({navigation}) {
    const createTable = () => {
     db.transaction((tx) => {
       tx.executeSql(
-        'CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT,hoten TEXT, gioitinh INTEGER, cardid INTEGER, phonenumber TEXT, datebirth TEXT, cardimgtop TEXT, cardimgbt TEXT)',
+        'CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT,hoten TEXT, gioitinh TEXT, cardid TEXT, phonenumber TEXT, datebirth TEXT, cardimgtop TEXT, cardimgbt TEXT)',
         [],
         (tx, res) => {
           console.log("table create complete");
@@ -171,10 +165,11 @@ function Mainactivity ({navigation}) {
             let results = [];
             for (let i = 0; i < len; i++) {
               let item = res.rows.item(i);
-              results.push({ id: item.id, name: item.hoten });
+              results.push({ id: item.id, name: item.hoten, gender: item.gioitinh, card: item.cardid, phone: item.phonenumber, birth: item.datebirth, cardimgtop: item.cardimgtop, cardimgbt: item.cardimgbt});
             }
 
             console.log(results);
+            setListItemPerson(results);
           }
         },
         error => {
@@ -190,18 +185,18 @@ function Mainactivity ({navigation}) {
   }, []);
   
 
-  for (let index = 0; index <= listDefault.length; index++) {
-    if (indexGet) {
-      if (index == listDefault.length) {
-        setIndexGet(!indexGet);
-      }else {
-        const listItem = (listDefault[index].replace("||","|")).split("|");
-        setListItemPerson(prevArray => [...prevArray, listItem]);
-      }
-    }else {
-      break;
-    }
-  }
+  // for (let index = 0; index <= listDefault.length; index++) {
+  //   if (indexGet) {
+  //     if (index == listDefault.length) {
+  //       setIndexGet(!indexGet);
+  //     }else {
+  //       const listItem = (listDefault[index].replace("||","|")).split("|");
+  //       setListItemPerson(prevArray => [...prevArray, listItem]);
+  //     }
+  //   }else {
+  //     break;
+  //   }
+  // }
 
   onchange = (nativeEvent) => {
     // console.log(nativeEvent)
@@ -366,7 +361,7 @@ function Mainactivity ({navigation}) {
                                   Họ Và Tên 
                                 </Text>
                                 <Text style={{color:'green'}}>
-                                  {listItemPerSon[index][1]}
+                                  {listItemPerSon[index]["name"]}
                                 </Text>
                               </View>
                               <View style={{flexDirection: 'row', justifyContent:'space-between' , marginBottom:5}}>
@@ -374,7 +369,7 @@ function Mainactivity ({navigation}) {
                                   Số
                                 </Text>
                                 <Text style={{color:'black'}}>
-                                {listItemPerSon[index][0]}
+                                {listItemPerSon[index]["card"]}
                                 </Text>
                               </View>
                               <View style={{flexDirection: 'row', justifyContent:'space-between' , marginBottom:5}}>
@@ -383,7 +378,7 @@ function Mainactivity ({navigation}) {
                                 </Text>
 
                                 <Text style={{color:'black'}}>
-                                {listItemPerSon[index][2]}
+                                {listItemPerSon[index]["birth"]}
                                 </Text>
                               </View>
                               <View style={{flexDirection: 'row', justifyContent:'space-between' , marginBottom:5}}>
@@ -392,7 +387,7 @@ function Mainactivity ({navigation}) {
                                 </Text>
 
                                 <Text style={{color:'black'}}>
-                                {listItemPerSon[index][3]}
+                                {listItemPerSon[index]["gender"]}
                                 </Text>
                               </View>
                               <View style={{flexDirection: 'row', justifyContent:'space-between' , marginBottom:5}}>
@@ -401,7 +396,7 @@ function Mainactivity ({navigation}) {
                                 </Text>
 
                                 <Text style={{color:'black'}}>
-                                0398802442
+                                {listItemPerSon[index]["phone"]}
                                 </Text>
                               </View>
                            
@@ -474,7 +469,7 @@ function Mainactivity ({navigation}) {
                             )
                         }
                         <Text 
-                                    style ={cardActive >= Number(listDefault.length)  ? { margin:3,
+                                    style ={cardActive >= Number(listItemPerSon.length)  ? { margin:3,
                                         color:'#05850A', height:20}: { margin:3,
                                             color:'#DBDBDB', height:20}}
                                 >

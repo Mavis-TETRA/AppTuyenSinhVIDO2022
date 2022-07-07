@@ -1,26 +1,60 @@
 /* eslint-disable prettier/prettier */
 import React, { Component } from "react";
+import { useState, useEffect, useRef } from 'react';
 
 import { View, Dimensions, Text, TouchableOpacity } from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import * as Animatable from "react-native-animatable";
+import {openDatabase} from 'react-native-sqlite-storage';
+
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 console.disableYellowBox = true;
-
+const db = openDatabase(
+  {
+    name: 'studentdb',
+  },
+);
+// ["074202000079", "Trần Minh Tân", "07092002", "Nam", "361/12 Đường An Nhơn Tây, Tổ 1, Ấp Ba Sòng, An Nhơn Tây, Củ Chi, TP.Hồ Chí Minh", "11022022"]
 function Scanneractivity({navigation})  { //extends Component
+  const addData = (data) => {
+    // const genderConvert = 0;
+    if (data[3] == "Nam") {
+      const genderConvert = 1;
+    }else {
+      const genderConvert = 0;
+    }
+    db.transaction(txn => {
+      txn.executeSql(
+        `INSERT INTO users (hoten, gioitinh , cardid , phonenumber, datebirth, cardimgtop, cardimgbt) VALUES (?,?,?,?,?,?,?)`,
+        [data[1],data[3], data[0], "0398802442", "07/09/2002", null, null],
+        (sqlTxn, res) => {
+          console.log(`${data[1]} category added successfully`);
+          navigation.navigate('Mainactivity')
+        },
+        error => {
+          console.log("error on adding category " + error.message);
+        },
+      );
+    });
+  };
+
 
   const onSuccess = (e) => {
-    if (e.data) {
-      
+    if ((e.data).indexOf("|") > -1) {
+      const replaceData = (e.data).replace('||', '|');
+      const split = replaceData.split('|');
+      alert(split);
+      console.log(split);
+      addData(split);
+    }else {
+      alert("Mời bạn Scan lại QR Code");
     }
-    // const replaceData = e.replace('||', '|')
-    // const split = replaceData.split('|');
-    alert(e.data);
-    console.log(e.data);
+    
+    
   }
 
   const makeSlideOutTranslation = (translationType, fromValue) => {
